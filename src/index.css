@@ -1,0 +1,63 @@
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&family=Montserrat:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #1e2a58;
+  --color-accent: #617ad8;
+  --color-bgMain: #fffbff;
+  --color-cardLight: #7bafe3;
+  --color-cardSoft: #c3b9f0;
+
+  --font-heading: 'Comfortaa', sans-serif;
+  --font-body: 'Montserrat', sans-serif;
+}
+
+@layer base {
+  html, body {
+    @apply bg-bgMain text-primary font-body;
+    scroll-behavior: smooth;
+    scroll-padding-top: 88px;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading text-primary;
+  }
+}
+
+@layer utilities {
+  .animate-blob {
+    animation: blob 7s infinite;
+  }
+  .animation-delay-2000 {
+    animation-delay: 2s;
+  }
+  .animation-delay-4000 {
+    animation-delay: 4s;
+  }
+  .cubic-bezier-custom {
+    transition-timing-function: cubic-bezier(0.25, 1, 0.5, 1);
+  }
+  .animate-bop {
+    animation: bop 2.5s ease-in-out infinite;
+  }
+  .animate-float {
+    animation: float 4s ease-in-out infinite;
+  }
+}
+
+@keyframes blob {
+  0% { transform: translate(0px, 0px) scale(1) rotate(0deg); }
+  33% { transform: translate(250px, -250px) scale(1.6) rotate(120deg); }
+  66% { transform: translate(-200px, 250px) scale(0.5) rotate(-90deg); }
+  100% { transform: translate(0px, 0px) scale(1) rotate(0deg); }
+}
+
+@keyframes bop {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.03); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
