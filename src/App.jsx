@@ -3,7 +3,7 @@ import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Product from './components/Product';
 import Ciencia from './components/Ciencia';
-import Testimonios from './components/Testimonios';
+
 import Identity from './components/Identity';
 import Soporte from './components/Soporte';
 import Footer from './components/Footer';
@@ -24,8 +24,7 @@ function App() {
         <Ciencia />
         <Divider />
         <Identity />
-        <Divider />
-        <Testimonios />
+
         <Divider />
         <Soporte />
       </main>
