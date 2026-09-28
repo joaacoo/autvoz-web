@@ -79,8 +79,8 @@ const Product = () => {
                       ${isActive
                         ? 'opacity-100 scale-100 rotate-y-0 z-10 filter-none'
                         : isExiting
-                        ? 'opacity-0 scale-95 rotate-y-6 z-5 blur-sm'
-                        : 'opacity-0 scale-105 -rotate-y-6 z-0'
+                          ? 'opacity-0 scale-95 rotate-y-6 z-5 blur-sm'
+                          : 'opacity-0 scale-105 -rotate-y-6 z-0'
                       }
                     `}
                   />

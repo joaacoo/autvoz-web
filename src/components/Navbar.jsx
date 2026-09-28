@@ -44,7 +44,7 @@ const Navbar = () => {
           <div className="hidden md:flex items-center space-x-8">
             <a href="#producto" className="text-primary hover:text-accent font-medium transition-colors">Producto</a>
             <a href="#ciencia" className="text-primary hover:text-accent font-medium transition-colors">Ciencia y Avales</a>
-            <a href="#testimonios" className="text-primary hover:text-accent font-medium transition-colors">Testimonios</a>
+
             <a href="#soporte" className="text-primary hover:text-accent font-medium transition-colors">Soporte Técnico</a>
             <button className="bg-accent text-white px-6 py-2.5 rounded-full font-bold hover:bg-[#4357a7] transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
               Comprar Ahora
@@ -84,7 +84,7 @@ const Navbar = () => {
           {[
             { href: '#producto', label: 'Producto' },
             { href: '#ciencia', label: 'Ciencia y Avales' },
-            { href: '#testimonios', label: 'Testimonios' },
+
             { href: '#soporte', label: 'Soporte Técnico' },
           ].map(({ href, label }, i) => (
             <a
