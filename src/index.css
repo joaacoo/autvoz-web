@@ -43,6 +43,37 @@
   .animate-float {
     animation: float 4s ease-in-out infinite;
   }
+  .product-float-badge {
+    overflow: hidden;
+    transition:
+      transform 0.55s cubic-bezier(0.34, 1.56, 0.64, 1),
+      box-shadow 0.45s ease,
+      background-color 0.35s ease;
+  }
+  .product-float-badge::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      115deg,
+      transparent 30%,
+      rgba(255, 255, 255, 0.7) 48%,
+      transparent 66%
+    );
+    transform: translateX(-140%);
+    pointer-events: none;
+  }
+  .product-float-badge:hover {
+    transform: translateY(-8px) scale(1.08) rotate(-2deg);
+    box-shadow: 0 18px 34px -12px rgba(30, 42, 88, 0.32);
+    background-color: rgba(255, 255, 255, 0.92);
+  }
+  .product-float-badge:hover::after {
+    animation: badge-shine 0.75s ease-out;
+  }
+  .product-float-badge:hover .product-float-badge-icon {
+    animation: badge-icon-pop 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
 }
 
 @keyframes blob {
@@ -60,4 +91,16 @@
 @keyframes float {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-10px); }
+}
+
+@keyframes badge-shine {
+  0% { transform: translateX(-140%); }
+  100% { transform: translateX(140%); }
+}
+
+@keyframes badge-icon-pop {
+  0% { transform: scale(1) rotate(0deg); }
+  40% { transform: scale(1.22) rotate(-12deg); }
+  70% { transform: scale(1.08) rotate(8deg); }
+  100% { transform: scale(1) rotate(0deg); }
 }

@@ -1,16 +1,67 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Activity, ShieldCheck, Heart, Sparkles, Bluetooth } from 'lucide-react';
 
-const Product = () => {
-  const images = ['/pulsera.jpg', '/pulsera2.jpg', '/pulsera3.jpg'];
-  const [currentImg, setCurrentImg] = useState(0);
+const variants = [
+  {
+    id: 'todas',
+    name: 'Todas',
+    image: '/pulsera-colores.jpg',
+    alt: 'Pulseras AutVoz en celeste, lila y gris',
+    swatchClass: 'bg-[conic-gradient(from_210deg,#9ec7e6_0_33%,#c5b0d8_33%_66%,#c0c0c4_66%_100%)]',
+  },
+  {
+    id: 'celeste',
+    name: 'Celeste',
+    image: '/pulsera-celeste.jpg',
+    alt: 'Pulsera AutVoz celeste pastel',
+    swatchClass: 'bg-[#9ec7e6]',
+  },
+  {
+    id: 'lila',
+    name: 'Lila',
+    image: '/pulsera-lila.jpg',
+    alt: 'Pulsera AutVoz lila lavanda',
+    swatchClass: 'bg-[#c5b0d8]',
+  },
+  {
+    id: 'gris',
+    name: 'Gris',
+    image: '/pulsera-gris.jpg',
+    alt: 'Pulsera AutVoz gris claro',
+    swatchClass: 'bg-[#c0c0c4]',
+  },
+];
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentImg((prev) => (prev + 1) % images.length);
-    }, 4000);
-    return () => clearInterval(timer);
-  }, [images.length]);
+const Product = () => {
+  const [currentIdx, setCurrentIdx] = useState(0);
+  const current = variants[currentIdx];
+
+  const ColorPickerContent = () => (
+    <div className="flex flex-col items-center gap-2 bg-white/95 backdrop-blur-md border border-gray-200 px-5 py-3 rounded-2xl shadow-[0_18px_45px_-5px_rgba(0,0,0,0.28)]">
+      <div className="flex items-center gap-2">
+        {variants.map((variant, idx) => {
+          const isActive = idx === currentIdx;
+          return (
+            <button
+              key={variant.id}
+              type="button"
+              onClick={() => setCurrentIdx(idx)}
+              aria-label={`Ver pulsera ${variant.name}`}
+              aria-pressed={isActive}
+              title={variant.name}
+              className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full border-2 transition-all duration-300 ${variant.swatchClass} ${isActive
+                ? 'border-primary scale-110 ring-2 ring-primary/20'
+                : 'border-white/80 hover:scale-110 hover:border-primary/40'
+                }`}
+            />
+          );
+        })}
+      </div>
+      <p className="text-xs sm:text-sm font-bold uppercase tracking-[0.16em] text-primary/80">
+        {current.name}
+      </p>
+    </div>
+  );
 
   const features = [
     {
@@ -45,7 +96,7 @@ const Product = () => {
             <div className="space-y-8">
               {features.map((feature, index) => (
                 <div key={index} className="flex gap-6 group">
-                  <div className="flex-shrink-0 w-16 h-16 bg-cardLight/20 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform shadow-sm">
+                  <div className="flex-shrink-0 w-16 h-16 bg-cardLight/20 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
                     {feature.icon}
                   </div>
                   <div>
@@ -59,55 +110,33 @@ const Product = () => {
             </div>
           </div>
 
-          <div className="relative mt-0 lg:mt-0 perspective-1000">
-            <div className="absolute inset-0 bg-cardSoft rounded-[3rem] transform rotate-1 scale-95 opacity-10 sm:scale-100 sm:rotate-2 lg:scale-105 lg:rotate-3 opacity-15 sm:opacity-20"></div>
-
-            {/* Carrusel — cross-fade 3D premium */}
-            <div className="relative w-full h-[320px] sm:h-[500px] lg:h-[600px] rounded-[3rem] shadow-[0_25px_60px_-12px_rgba(0,0,0,0.35)] overflow-hidden group perspective-1000">
-              {images.map((img, idx) => {
-                const isActive = idx === currentImg;
-                const isExiting = idx === (currentImg - 1 + images.length) % images.length && !isActive;
+          {/* Columna de la derecha (Imagen y Selector flotante) */}
+          <div className="relative mt-10 lg:mt-0 pb-16 sm:pb-4">
+            {/* Contenedor principal con una sombra gris profunda y muy visible */}
+            <div className="relative w-full h-[320px] sm:h-[480px] lg:h-[580px] rounded-[2rem] sm:rounded-[2.75rem] shadow-[0_25px_60px_-12px_rgba(0,0,0,0.3)] border border-gray-200/80 overflow-visible bg-[#f4f4f6]">
+              {variants.map((variant, idx) => {
+                const isActive = idx === currentIdx;
 
                 return (
                   <img
-                    key={idx}
-                    src={img}
-                    alt={`AutVoz - Vista ${idx + 1}`}
-                    className={`
-                      absolute inset-0 w-full h-full object-cover
-                      transition-all duration-1000 ease-[cubic-bezier(0.25,1,0.5,1)]
-                      ${isActive
-                        ? 'opacity-100 scale-100 rotate-y-0 z-10 filter-none'
-                        : isExiting
-                          ? 'opacity-0 scale-95 rotate-y-6 z-5 blur-sm'
-                          : 'opacity-0 scale-105 -rotate-y-6 z-0'
-                      }
-                    `}
+                    key={variant.id}
+                    src={variant.image}
+                    alt={variant.alt}
+                    className={`absolute inset-0 w-full h-full object-cover rounded-[2rem] sm:rounded-[2.75rem] transition-opacity duration-500 ease-in-out ${isActive ? 'opacity-100 z-10' : 'opacity-0 z-0 pointer-events-none'
+                      }`}
                   />
                 );
               })}
 
-              {/* Indicadores con progreso */}
-              <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex space-x-3 z-20">
-                {images.map((_, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => setCurrentImg(idx)}
-                    className={`relative h-2.5 rounded-full transition-all duration-500 ease-out ${idx === currentImg ? 'bg-white w-10 shadow-lg scale-110' : 'bg-white/40 w-3 hover:bg-white/80 hover:scale-110'
-                      }`}
-                    aria-label={`Ver imagen ${idx + 1}`}
-                  >
-                    {idx === currentImg && (
-                      <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-1.5 h-1.5 bg-white/30 rounded-full animate-pulse" />
-                    )}
-                  </button>
-                ))}
+              {/* Selector más abajo en celulares y sombra pronunciada */}
+              <div className="absolute -bottom-14 sm:-bottom-4 left-0 right-0 z-20 flex justify-center px-4">
+                <ColorPickerContent />
               </div>
             </div>
 
-            {/* Badges Glassmorphism para toque moderno/Premium */}
-            <div className="absolute top-8 -left-4 sm:-left-8 bg-white/70 backdrop-blur-md border border-white/40 p-3 pr-5 rounded-2xl shadow-xl flex items-center space-x-3 z-30 animate-float hidden sm:flex cursor-pointer transition-transform duration-300 hover:scale-110 hover:-rotate-2 hover:shadow-2xl hover:bg-white/90">
-              <div className="bg-accent/20 p-2 rounded-xl text-accent">
+            {/* Insignias flotantes */}
+            <div className="product-float-badge absolute top-8 -left-4 sm:-left-8 bg-white/90 backdrop-blur-md border border-gray-200 p-2.5 pr-4 rounded-2xl shadow-[0_12px_25px_-10px_rgba(0,0,0,0.2)] flex items-center space-x-3 z-30 hidden sm:flex cursor-pointer origin-center">
+              <div className="product-float-badge-icon bg-accent/20 p-2 rounded-xl text-accent">
                 <Sparkles size={18} />
               </div>
               <div>
@@ -116,8 +145,8 @@ const Product = () => {
               </div>
             </div>
 
-            <div className="absolute bottom-24 -right-4 sm:-right-8 bg-white/70 backdrop-blur-md border border-white/40 p-3 pr-5 rounded-2xl shadow-xl flex items-center space-x-3 z-30 animate-float hidden sm:flex cursor-pointer transition-transform duration-300 hover:scale-110 hover:rotate-2 hover:shadow-2xl hover:bg-white/90" style={{ animationDelay: '1.5s' }}>
-              <div className="bg-[#009EE3]/10 p-2 rounded-xl text-[#009EE3]">
+            <div className="product-float-badge absolute bottom-12 -right-4 sm:-right-8 bg-white/90 backdrop-blur-md border border-gray-200 p-2.5 pr-4 rounded-2xl shadow-[0_12px_25px_-10px_rgba(0,0,0,0.2)] flex items-center space-x-3 z-30 hidden sm:flex cursor-pointer origin-center">
+              <div className="product-float-badge-icon bg-[#009EE3]/10 p-2 rounded-xl text-[#009EE3]">
                 <Bluetooth size={18} />
               </div>
               <div>
