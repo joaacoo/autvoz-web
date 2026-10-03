@@ -37,7 +37,7 @@ const Navbar = () => {
             className="flex-shrink-0 flex items-center cursor-pointer"
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
           >
-            <img src="/logo.jpeg" alt="AutVoz Logo" className="h-14 w-auto object-contain" />
+            <img src="/logo-header.jpeg" alt="AutVoz Logo" className="h-14 w-auto object-contain" />
           </div>
 
           {/* Desktop Menu */}
